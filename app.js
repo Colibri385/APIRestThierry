@@ -47,26 +47,8 @@ const productSchema = new mongoose.Schema ({
 
 const Product = mongoose.model("product", productSchema)
 
-// ROUTE
 
-app.route("/")
-.get ((req, res) => {
-  Product.find(function(err, produit) {
-    if(!err) {
-      res.render('index', {
-        product : produit
-      })
-    }else {
-      res.send(err)
-    }
-  })
-})
 
-// GET method route
-app.get('/', function (req, res) {
-    res.render('index');
-  });
-  
  // POST method route
   // app.post('/', function (req, res) {
     // res.send('POST request to the homepage');
@@ -74,6 +56,13 @@ app.get('/', function (req, res) {
 
 
 // ROUTE pour Affiche avec ID  page nommée "fiche"
+
+// ROUTE
+// POST ajouter un produit
+app.route("/ajouter-un-article")
+.get( (req, res) => {
+    res.render("ajouter")
+})
 
 app.route("/:id")
 .get(function(req, res) {
@@ -91,6 +80,29 @@ app.route("/:id")
        }
     })
 })
+
+
+
+
+
+
+
+
+
+// GET Affiche la liste des produits
+app.route("/")
+.get ((req, res) => {
+  Product.find(function(err, produit) {
+    if(!err) {
+      res.render('index', {
+        product : produit
+      })
+    }else {
+      res.send(err)
+    }
+  })
+})
+
 
 // port 
 app.listen(port, function () {
