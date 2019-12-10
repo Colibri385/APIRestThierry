@@ -9,7 +9,7 @@ const exphbs = require('express-handlebars')
 // expresse dans app pour utiliser express
 
 const app = express();
-const port = 1966
+const port = 2019
 
 // dossier public pour CSS
 
@@ -68,9 +68,29 @@ app.get('/', function (req, res) {
   });
   
  // POST method route
-  app.post('/', function (req, res) {
-    res.send('POST request to the homepage');
-  });
+  // app.post('/', function (req, res) {
+    // res.send('POST request to the homepage');
+  // });
+
+
+// ROUTE pour Affiche avec ID  page nommée "fiche"
+
+app.route("/:id")
+.get(function(req, res) {
+    Product.findOne(
+      {_id: req.params.id},
+       function(err, produit){
+      if(!err) {
+        res.render('fiche', {
+          _id: produit.id,
+          title: produit.title,
+          content: produit.content,
+        })
+      } else {
+        res.send("err")
+       }
+    })
+})
 
 // port 
 app.listen(port, function () {
